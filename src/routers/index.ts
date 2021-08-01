@@ -1,11 +1,16 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { attatchLayoutTo } from '../layouts'
 import Home from './Home.vue'
 
-const routes: RouteRecordRaw[] = [{ path: '', component: Home }]
+const pathes = {
+  HOME: '/',
+} as const
 
-const router = createRouter({
+export type Path = typeof pathes[keyof typeof pathes]
+
+const routes: RouteRecordRaw[] = [{ path: pathes.HOME, component: attatchLayoutTo(Home) }]
+
+export const router = createRouter({
   history: createWebHashHistory(),
   routes,
 })
-
-export default router

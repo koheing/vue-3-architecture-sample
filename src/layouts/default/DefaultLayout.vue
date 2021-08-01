@@ -1,11 +1,12 @@
 <template>
-  <div>Home</div>
+  <div>DefaultLayout</div>
+  <slot />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'DefaultLayout',
 })
 </script>

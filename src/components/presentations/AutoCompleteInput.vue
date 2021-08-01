@@ -1,16 +1,28 @@
 <template>
-  <auto-complete ref="autoComplete" :candidates="candidates" @select="onSelect">
+  <auto-complete ref="autoComplete" :candidates="suggestions" @select="onSelect">
     <input v-model="text" :placeholder="placeholder" @keydown="onKeydown" @keypress="onKeypress" />
   </auto-complete>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onUnmounted, PropType, reactive, ref, toRefs, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onUnmounted,
+  PropType,
+  reactive,
+  ref,
+  toRef,
+  toRefs,
+  watch,
+} from 'vue'
 import AutoComplete, { SelectEvent } from '../atoms/AutoComplete.vue'
 
 export default defineComponent({
   name: 'AutoCompleteInput',
-  emits: ['select'],
+  components: {
+    AutoComplete,
+  },
   props: {
     candidates: {
       type: Array as PropType<Array<string>>,
@@ -18,11 +30,10 @@ export default defineComponent({
     },
     placeholder: {
       type: String,
+      default: '',
     },
   },
-  components: {
-    AutoComplete,
-  },
+  emits: ['select'],
   setup(props, context) {
     const autoComplete = ref<InstanceType<typeof AutoComplete>>()
 
@@ -61,8 +72,8 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      candidates,
-      placeholder: props.placeholder,
+      suggestions: candidates,
+      ...toRef(props, 'placeholder'),
       onSelect,
       onKeydown,
       onKeypress,

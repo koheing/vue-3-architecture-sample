@@ -1,17 +1,16 @@
 <template>
   <div class="form">
-    <input v-model="text" @blur="onBlur" :placeholder="placeholder" />
+    <input v-model="text" :placeholder="placeholder" @blur="onBlur" />
     <div class="error">{{ message }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, toRef } from 'vue'
 import { useValidator, Validator } from '../../composables/use-validator'
 
 export default defineComponent({
   name: 'TextInput',
-  emits: ['validate'],
   props: {
     validators: {
       type: Array as PropType<Validator[]>,
@@ -22,13 +21,14 @@ export default defineComponent({
       default: 'Text',
     },
   },
+  emits: ['validate'],
   setup(props, context) {
     const { onBlur, text, message } = useValidator(props.validators, (result) =>
       context.emit('validate', result)
     )
 
     return {
-      placeholder: props.placeholder,
+      ...toRef(props, 'placeholder'),
       text,
       message,
       onBlur,

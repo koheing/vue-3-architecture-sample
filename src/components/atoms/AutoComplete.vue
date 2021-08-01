@@ -1,7 +1,7 @@
 <template>
   <slot />
-  <div class="list" v-if="opened">
-    <div class="candidates" v-for="candidate in candidates" :key="candidate">
+  <div v-if="opened" class="list">
+    <div v-for="candidate in candidates" :key="candidate" class="candidates">
       <div
         class="candidate"
         :class="{ focus: selectee === candidate }"
@@ -14,19 +14,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive, toRefs, watch } from 'vue'
+import { computed, defineComponent, PropType, reactive, toRef, toRefs } from 'vue'
 
 export type SelectEvent = { selectee: string }
 
 export default defineComponent({
   name: 'AutoComplete',
-  emits: ['select'],
   props: {
     candidates: {
       type: Array as PropType<Array<string>>,
       required: true,
     },
   },
+  emits: ['select'],
   setup(props, context) {
     const state = reactive({
       selectee: '',
@@ -82,7 +82,7 @@ export default defineComponent({
     }
 
     return {
-      candidates,
+      ...toRef(props, 'candidates'),
       ...toRefs(state),
       cursorUp,
       cursorDown,

@@ -1,5 +1,5 @@
 <template>
-  <teleport to="#modal" v-if="opened">
+  <teleport v-if="opened" to="#modal">
     <overlay @backdrop="onClick">
       <slot></slot>
     </overlay>
@@ -13,7 +13,6 @@ import { BackdropClickEvent } from '../atoms/Overlay.vue'
 
 export default defineComponent({
   name: 'Popup',
-  emits: ['close'],
   components: { Overlay },
   props: {
     opened: {
@@ -28,6 +27,7 @@ export default defineComponent({
       default: 'modal',
     },
   },
+  emits: ['close'],
   setup(props, context) {
     const onClick = ({ onBackdrop }: BackdropClickEvent) => {
       if (props.mode === 'modal' || !onBackdrop) return
@@ -36,7 +36,7 @@ export default defineComponent({
     }
 
     return {
-      opened: toRef(props, 'opened'),
+      ...toRef(props, 'opened'),
       onClick,
     }
   },

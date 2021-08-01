@@ -1,5 +1,8 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    'parser': '@typescript-eslint/parser',
+  },
   plugins: [
     '@typescript-eslint',
   ],
@@ -9,6 +12,7 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
+    "plugin:vue/base"
   ],
   rules: {
     // override/add rules settings here, such as:
