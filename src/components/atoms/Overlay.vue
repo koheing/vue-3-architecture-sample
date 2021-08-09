@@ -11,7 +11,11 @@ export type BackdropClickEvent = { onBackdrop: boolean }
 
 export default defineComponent({
   name: 'Overlay',
-  emits: ['backdrop'],
+  emits: {
+    backdrop: (payload: BackdropClickEvent) => {
+      return typeof payload === 'boolean'
+    },
+  },
   setup(_, context) {
     const onClick = (e: Event) => {
       const element = e.target as HTMLElement

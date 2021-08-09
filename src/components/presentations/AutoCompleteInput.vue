@@ -33,7 +33,11 @@ export default defineComponent({
       default: '',
     },
   },
-  emits: ['select'],
+  emits: {
+    select: (payload: SelectEvent) => {
+      return payload.selectee !== null
+    },
+  },
   setup(props, context) {
     const autoComplete = ref<InstanceType<typeof AutoComplete>>()
 

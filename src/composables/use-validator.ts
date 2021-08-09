@@ -1,6 +1,6 @@
 import { onUnmounted, reactive, toRefs, watch } from 'vue'
 
-interface Validated {
+export interface Validated {
   valid: boolean
   message: string
 }

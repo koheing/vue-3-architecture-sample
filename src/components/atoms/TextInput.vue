@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, toRef } from 'vue'
-import { useValidator, Validator } from '../../composables/use-validator'
+import { useValidator, Validated, Validator } from '../../composables/use-validator'
 
 export default defineComponent({
   name: 'TextInput',
@@ -21,7 +21,11 @@ export default defineComponent({
       default: 'Text',
     },
   },
-  emits: ['validate'],
+  emits: {
+    validate: (payload: Validated) => {
+      return typeof payload.valid === 'boolean' && payload.message !== null
+    },
+  },
   setup(props, context) {
     const { onBlur, text, message } = useValidator(props.validators, (result) =>
       context.emit('validate', result)

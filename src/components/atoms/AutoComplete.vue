@@ -26,7 +26,11 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['select'],
+  emits: {
+    select: (payload: SelectEvent) => {
+      return payload.selectee !== null
+    },
+  },
   setup(props, context) {
     const state = reactive({
       selectee: '',
